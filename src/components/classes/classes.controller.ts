@@ -5,7 +5,7 @@ import {
   Put,
   Delete,
   Body,
-  Param
+  Param, HttpException, HttpStatus
 } from '@nestjs/common';
 import { CreateClassDto } from './dto/createClass.dto';
 import { ClassesService } from './classes.service';

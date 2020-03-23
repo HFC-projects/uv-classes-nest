@@ -5,6 +5,8 @@ import { RoomsModule } from './rooms/rooms.module';
 import { StudentsModule } from './students/students.module';
 import { TeachersModule } from './teachers/teachers.module';
 import Config from '../config/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggingInterceptor } from '../common/logger.interceptor';
 
 @Module({
   imports: [
@@ -13,6 +15,12 @@ import Config from '../config/config';
     StudentsModule,
     TeachersModule,
     MongooseModule.forRoot(Config.MONGO_URL)
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor
+    }
   ]
 })
 export class AppModule {

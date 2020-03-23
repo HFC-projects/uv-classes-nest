@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Class } from './types/class.type';
@@ -13,7 +13,11 @@ export class ClassesService {
   }
 
   async findOne(id: string): Promise<Class> {
-    return await this.ClassModel.findOne({ id: id });
+    const ourClass = await this.ClassModel.findOne({ id: id });
+    if (!ourClass) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    return ourClass;
   }
 
   async create(ourClass: Class): Promise<Class> {
